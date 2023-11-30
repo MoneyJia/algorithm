@@ -15,17 +15,141 @@ class ViewController: UIViewController {
         
 //        createNode1()
 //        createNode2()
-        createNode3()
+//        createNode3()
+//        createNode4()
+        createNode5()
     }
-
+    
 
 }
 
-
-///刷脂针专题
+/// 链表删除
 extension ViewController {
     
+//    输入：head = [1,2,3,3,4,4,5]
+
+    func createNode5() {
+        
+        let node1 = ListNode.init(1)
+        
+        let node2 = ListNode.init(2)
+        node1.next = node2
+        
+        let node3 = ListNode.init(3)
+        node2.next = node3
+        
+        let node4 = ListNode.init(3)
+        node3.next = node4
+
+        let node5 = ListNode.init(4)
+        node4.next = node5
+
+        let node6 = ListNode.init(4)
+        node5.next = node6
+
+        let node7 = ListNode.init(5)
+        node6.next = node7
+
+        let node = deleteDuplicates(node1)
+        
+        print("11")
+    }
+    
+    
+    ///删除排序链表中的重复元素II
+    ///给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。返回 已排序的链表 。
+    ///思路：遍历
+    ///1.因为头节点也可能是重复的，所以需要建立一个虚拟节点node1，返回时是node1.next
+    ///2.判断next节点的value和next.next节点的value是否相同，相同则表示next节点需要删除，这里需要循环查找到所有与next节点相同的节点并删除
+    ///  只能next = 什么来删除，而不是node1 = 这事遍历 不是删除
+    ///3.不同则继续遍历
+    func deleteDuplicates(_ head: ListNode?) -> ListNode? {
+        
+        let newHead: ListNode? = ListNode.init(0)
+        newHead?.next = head
+        
+        var node1 = newHead
+        
+        while node1?.next != nil {
+            
+            if node1?.next?.next != nil && node1?.next?.val == node1?.next?.next?.val {
+                
+                let val = node1?.next?.val
+                
+                while node1?.next != nil, node1?.next?.val == val {
+                    node1?.next = node1?.next?.next
+                }
+                
+            } else {
+                
+                node1 = node1?.next
+            }
+        }
+        
+        return newHead?.next
+    }
+    
 }
+
+
+///双指针专题
+extension ViewController {
+    
+    func createNode4() {
+        
+        let node1 = ListNode.init(1)
+        
+        let node2 = ListNode.init(2)
+        node1.next = node2
+        
+        let node3 = ListNode.init(3)
+        node2.next = node3
+        
+        let node4 = ListNode.init(4)
+        node3.next = node4
+        
+        let node5 = ListNode.init(5)
+        node4.next = node5
+        
+        let node = middleNode(node1)
+        
+        print("")
+    }
+    
+    ///链表的中间结点
+    ///给你单链表的头结点 head ，请你找出并返回链表的中间结点。
+    ///如果有两个中间结点，则返回第二个中间结点。
+    ///
+    ///使用快慢指针来解决这个问题
+    ///快的一次走两步，慢的走一步
+    ///这里需要考虑奇数偶数的问题
+    ///当为奇数时，快指针走到最后一个节点，此时next为空，慢指针就是中间节点
+    ///当为偶数时，快指针走到最后一个之前的节点，此时next不为空，在next.next也没有问题，这样在运行一次后快指针next为空，慢指针就是中间节点
+    func middleNode(_ head: ListNode?) -> ListNode? {
+        
+        guard let _ = head else {
+            return head
+        }
+        
+        guard let _ = head?.next else {
+            return head
+        }
+        
+        var fastNode = head
+        var slowNode = head
+        
+        while fastNode?.next != nil {
+            fastNode = fastNode?.next?.next
+            slowNode = slowNode?.next
+        }
+        
+        return slowNode
+    }
+}
+
+
+
+
 
 /// 合并有序链表
 extension ViewController {
